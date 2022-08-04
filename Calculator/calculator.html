@@ -1,0 +1,313 @@
+<!--New imporved calculator-->
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title> + - Calculator * / </title>
+        <link rel="icon" href="mathSymbols.png" type="image/png" />
+        <style>
+            body{
+                background-image: url("mathBackground.png");
+            }
+
+            #device {
+                min-height: 650px;
+                width: 60%;
+                transform: translate(30%, 5%);
+                background-color: rgba(150, 150, 250, .7);
+                display: grid;
+
+                grid-template-columns: 3% 20% 20% 20% 20% ;
+                grid-template-rows: 10% 15% 15% 15% 15% 15% ;
+                grid-gap: 2.5%;
+                grid-template-areas: 
+                    "spc blank blank blank blank"
+                    "spc display display display display"
+                    "spc one two three plus"
+                    "spc four five six minus"
+                    "spc seven eight nine multiply"
+                    "spc clear zero equals divide" ;
+            }
+
+            #display {
+                font-size: 30px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                background-color: #FFF;
+                grid-area: display;
+            }
+
+            #blank {
+                grid-area: blank;
+                background-color: rgba(150, 150, 250, 1.0);
+                font-size: 40px;
+            }
+
+            .btn {
+                font-size: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #777;
+                border: 10px double #000;
+            }
+
+            
+            .btn:hover {
+                background-color: rgba(177, 177, 177, 0.5);
+            }
+
+            #spc {
+                height: 10px;
+                grid-area: spc;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="device">
+            <div id="spc"></div>
+            <div id="blank" align="center">Calculator</div>
+            <div id="spc"></div>
+            <div id="display">0</div>
+            <div id="spc"></div>
+            <div id="seven" class="btn" onclick="seven()">7</div>
+            <div id="eight" class="btn" onclick="eight()">8</div>
+            <div id="nine" class="btn" onclick="nine()">9</div>
+            <div id="multiply" class="btn" onclick="multiply()">x</div>
+            <div id="spc"></div>
+            <div id="four" class="btn" onclick="four()">4</div>
+            <div id="five" class="btn" onclick="five()">5</div>
+            <div id="six" class="btn" onclick="six()">6</div>
+            <div id="minus" class="btn" onclick="subtract()">-</div>
+            <div id="spc"></div>
+            <div id="one" class="btn" onclick="one()">1</div>
+            <div id="two" class="btn" onclick="two()">2</div>
+            <div id="three" class="btn" onclick="three()">3</div>
+            <div id="plus" class="btn" onclick="add()">+</div>
+            <div id="spc"></div>
+            <div id="clear" class="btn" onclick="clearScreen()">C</div>
+            <div id="zero" class="btn" onclick="zero()">0</div>
+            <div id="equals" class="btn" onclick="equals()">=</div>
+            <div id="divide" class="btn" onclick="divide()">/</div>
+        </div>
+        <script>
+            var results = 0;
+            var accumulation = "";
+            var action = "ready";
+            var onScreen = document.getElementById("display");
+            function one() {
+                press(1);
+            }
+
+            function two() {
+                press(2);
+            }
+
+            function three() {
+                press(3);
+            }
+
+            function four() {
+                press(4);
+            }
+
+            function five() {
+                press(5);
+            }
+
+            function six() {
+                press(6);
+            }
+
+
+            function seven() {
+                press(7);
+            }
+
+            function eight() {
+                press(8);
+            }
+
+            function nine() {
+                press(9);
+            }
+
+            function zero() {
+                press(0);
+            }
+            
+            function multiply() {
+                if (action == "ready") {
+                    results = parseInt(accumulation);
+                    accumulation = "";
+                    action = "multiply";
+                }
+                else if (action == "subtract") {
+                    results -= parseInt(accumulation);
+                    accumulation = "";
+                    action = "multiply";
+                    onScreen.innerHTML = results;
+                }
+                else if (action == "add") {
+                    results += parseInt(accumulation);
+                    accumulation = "";
+                    action = "multiply";
+                    onScreen.innerHTML = results;
+                }
+                else if (action == "divide") {
+                    results /= parseInt(accumulation);
+                    accumulation = "";
+                    action = "multiply";
+                    onScreen.innerHTML = results;
+                }
+                else {
+                    let temp = 0;
+                    temp = results;
+                    results = parseInt(accumulation);
+                    results = temp * results;
+                    onScreen.innerHTML = results;
+                    accumulation = "";
+                }
+            
+            }
+
+            function subtract() {
+                if (action == "ready") {
+                    results = parseInt(accumulation);
+                    accumulation = "";
+                    action = "subtract";
+                }
+                else if (action == "multiply") {
+                    results *= parseInt(accumulation);
+                    accumulation = "";
+                    action = "subtract";
+                    onScreen.innerHTML = results;
+                }
+                else if (action == "add") {
+                    results += parseInt(accumulation);
+                    accumulation = "";
+                    action = "subtract";
+                    onScreen.innerHTML = results;
+                }
+                else if (action == "divide") {
+                    results /= parseInt(accumulation);
+                    accumulation = "";
+                    action = "subtract";
+                    onScreen.innerHTML = results;
+                }
+                else {
+                    let temp = 0;
+                    temp = results;
+                    results = parseInt(accumulation);
+                    results = temp - results;
+                    onScreen.innerHTML = results;
+                    accumulation = "";
+                }
+            
+            }
+
+            function add() {
+                if (action == "ready") {
+                    results = parseInt(accumulation);
+                    accumulation = "";
+                    action = "add";
+                }
+                else if (action == "multiply") {
+                    results *= parseInt(accumulation);
+                    accumulation = "";
+                    action = "add";
+                    onScreen.innerHTML = results;
+                }
+                else if (action == "subtract") {
+                    results -= parseInt(accumulation);
+                    accumulation = "";
+                    action = "add";
+                    onScreen.innerHTML = results;
+                }
+                else if (action == "divide") {
+                    results /= parseInt(accumulation);
+                    accumulation = "";
+                    action = "add";
+                    onScreen.innerHTML = results;
+                }
+                else {
+                    let temp = 0;
+                    temp = results;
+                    results = parseInt(accumulation);
+                    results = temp + results;
+                    onScreen.innerHTML = results;
+                    accumulation = "";
+                }
+            
+            }
+
+            function divide() {
+                if (action == "ready") {
+                    results = parseInt(accumulation);
+                    accumulation = "";
+                    action = "divide";
+                }
+                else if (action == "multiply") {
+                    results *= parseInt(accumulation);
+                    accumulation = "";
+                    action = "divide";
+                    onScreen.innerHTML = results;
+                }
+                else if (action == "subtract") {
+                    results -= parseInt(accumulation);
+                    accumulation = "";
+                    action = "divide";
+                    onScreen.innerHTML = results;
+                }
+                else if (action == "add") {
+                    results += parseInt(accumulation);
+                    accumulation = "";
+                    action = "divide";
+                    onScreen.innerHTML = results;
+                }
+                else {
+                    let temp = 0;
+                    temp = results;
+                    results = parseInt(accumulation);
+                    results = temp / results;
+                    onScreen.innerHTML = results;
+                    accumulation = "";
+                }
+            }
+
+            function clearScreen() {
+                accumulation = "";
+                results = 0;
+                action = "ready";
+                onScreen.innerHTML = "0";
+            }
+
+            function equals() {
+                if (action == "multiply") {
+                    results *= parseInt(accumulation);
+                }
+                else if (action == "subtract") {
+                    results -= parseInt(accumulation);
+                }
+                else if (action == "add") {
+                    results += parseInt(accumulation);
+                }
+                else if (action == "divide") {
+                    results /= parseInt(accumulation);
+                }
+                onScreen.innerHTML = results;
+                accumulation = "";
+                results = 0;
+                action = "ready";
+            }
+
+
+            function press(entry) {
+                accumulation += entry;
+                onScreen.innerHTML = accumulation;
+            }
+        </script>
+    </body>
+</html>
